@@ -14,3 +14,21 @@ When the application is running you can:
 
 ## Requirements
 - opencv2 python library (on raspberry pi: apt-get install python-opencv)
+
+## Mathematica Library
+
+Also included is a very basic Mathematica Module to import the image and to detect and hilight stars.
+
+```
+Get["/path/to/cosmos/VideoAstronomy.m"]
+
+# grab a frame
+MyFrame = CosmosImage[]
+
+# highlight detected stars
+HighlightStars[MyFrame]
+
+
+```
+
+
