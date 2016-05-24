@@ -12,3 +12,5 @@ When the application is running you can:
 - if you turn on SHARE IMAGE it will save a snapshot of the current view to /run/shm/cosmos.png every second
 
 
+## Requirements
+- opencv2 python library (on raspberry pi: apt-get install python-opencv)
