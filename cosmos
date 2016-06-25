@@ -7,6 +7,18 @@ from ui import UI
 import cv2
 import basic_cam_setting
 import numpy as np
+import argparse
+import time
+
+
+parser = argparse.ArgumentParser(description="Cosmos - Basic Video Astronomy capture application.")
+parser.add_argument('--headless',
+                    help="Run in headless mode with no UI window.",
+                    action='store_true'
+)
+args = parser.parse_args()
+
+
 
 cap = Capture()
 cap.start()
@@ -26,29 +38,30 @@ ui.add_ui(fw)
 
 ui_frame = None
 
+if args.headless:
+    while True:
+        frame = cap.get_frame()
+        fw.process(frame)
+        time.sleep(1)
+else:
+    while ui.keep_running():
+        frame = cap.get_frame()
 
-
-while ui.keep_running():
-    frame = cap.get_frame()
-
-    if (frame == None):
-	print "Failed to capture frame - check device."
-	break;
+        if (frame == None):
+            print "Failed to capture frame - check device."
+            break;
 	
 
-    if (ui_frame == None):
-        ui_frame = np.zeros(frame.shape, np.uint8)
+        if (ui_frame == None):
+            ui_frame = np.zeros(frame.shape, np.uint8)
     
-    if ui.check_keys() > -1:
-        ui_frame = np.zeros(frame.shape, np.uint8)
-        ui.draw(ui_frame)
+        if ui.check_keys() > -1:
+            ui_frame = np.zeros(frame.shape, np.uint8)
+            ui.draw(ui_frame)
 
-    frame = fw.process(frame)
-
-    cv2.imshow('cosmos', cv2.bitwise_xor(frame, ui_frame))
-
-
-
-
+        frame = fw.process(frame)
+                
+        cv2.imshow('cosmos', cv2.bitwise_xor(frame, ui_frame))
+        
 cap.end()
 cv2.destroyAllWindows()
