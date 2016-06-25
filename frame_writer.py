@@ -31,7 +31,7 @@ class FrameWriter(object):
         self.thread.start()
         self.name = "SAVE IMAGES?"
         self.type = "bool"
-        self.run = False
+        self.run = True
 
 
     def get(self):

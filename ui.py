@@ -41,14 +41,10 @@ class UI(object):
                 
                 
         if (self.show_ui and key == 65364):
-            self.ui_idx+=1
-            if (self.ui_idx >= len(self.uis)):
-                self.ui_idx = 0
+            self.ui_idx = (self.ui_idx + 1) % len(self.uis)
 
         if (self.show_ui and key == 65362):
-            self.ui_idx-=1
-            if (self.ui_idx >= len(self.uis)):
-                self.ui_idx = 0
+            self.ui_idx = (self.ui_idx - 1) % len(self.uis)
 
                 
         if (plain_key == ord(' ')):
