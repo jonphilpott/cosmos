@@ -25,7 +25,7 @@ parser.add_argument('--device',
 
 parser.add_argument('--filename',
                     help="set capture filename in /run/shm. File will be written to /run/shm/filename.png",
-                    default="cosmos.png"
+                    default="cosmos"
 )
 
 
