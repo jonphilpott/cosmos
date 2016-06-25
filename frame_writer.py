@@ -21,9 +21,9 @@ class FrameWriterThread(threading.Thread):
 
 class FrameWriter(object):
 
-    def __init__(self):
-        self.path = "/run/shm/cosmos.png"
-        self.tmp_path = "/run/shm/cosmos.tmp.png"
+    def __init__(self, filename):
+        self.path = "/run/shm/%s.png" % filename
+        self.tmp_path = "/run/shm/%s.tmp.png" % filename
         self.last = time.time();
         self.q = Queue.Queue()
         self.thread = FrameWriterThread(self.q, self.path, self.tmp_path)
