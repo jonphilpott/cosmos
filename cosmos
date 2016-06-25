@@ -10,6 +10,7 @@ import numpy as np
 import argparse
 import time
 import atexit
+import signal
 
 parser = argparse.ArgumentParser(description="Cosmos - Basic Video Astronomy capture application.")
 parser.add_argument('--headless',
@@ -48,6 +49,15 @@ ui.add_ui(fw)
 
 ui_frame = None
 
+
+def cleanup():
+    print "Cleaning up"
+    cap.end()
+    cv2.destroyAllWindows()
+
+atexit.register(cleanup)
+
+
 if args.headless:
     while True:
         frame = cap.get_frame()
@@ -73,10 +83,3 @@ else:
                 
         cv2.imshow('cosmos', cv2.bitwise_xor(frame, ui_frame))
 
-
-def cleanup():
-    print "Cleaning up"
-    cap.end()
-    cv2.destroyAllWindows()
-
-atexit.register(cleanup)
