@@ -16,11 +16,18 @@ parser.add_argument('--headless',
                     help="Run in headless mode with no UI window.",
                     action='store_true'
 )
+parser.add_argument('--device',
+                    help="set capture device number.",
+                    type=int,
+                    default=0
+)
+
+
 args = parser.parse_args()
 
 
 
-cap = Capture()
+cap = Capture(args.device)
 cap.start()
 ui = UI(cap)
 
