@@ -20,7 +20,7 @@ When the application is running you can:
 Also included is a very basic Mathematica Module to import the image and to detect and hilight stars.
 
 ```
-Get["/path/to/cosmos/VideoAstronomy.m"]
+Get["/path/to/cosmos/extras/mathematica/VideoAstronomy.m"]
 
 # grab a frame
 MyFrame = CosmosImage[]
@@ -30,5 +30,9 @@ HighlightStars[MyFrame]
 
 
 ```
+
+## Nginx snippet
+
+also included is a very basic 3 line include for nginx that create an alias for /cosmos.png to /run/shm/cosmos.png
 
 
