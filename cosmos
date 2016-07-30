@@ -11,6 +11,7 @@ import argparse
 import time
 import atexit
 import signal
+import os
 
 parser = argparse.ArgumentParser(description="Cosmos - Basic Video Astronomy capture application.")
 parser.add_argument('--headless',
@@ -32,6 +33,10 @@ parser.add_argument('--filename',
                     help="set capture filename in /run/shm. File will be written to /run/shm/filename.png",
                     default="cosmos"
 )
+parser.add_argument('--savepath',
+                    help="set path where snapshots will be written, default is HOME/Pictures",
+                    default=os.path.join(os.path.expanduser("~"), "Pictures")
+)
 
 
 args = parser.parse_args()
@@ -46,7 +51,7 @@ brightness_ui = basic_cam_setting.BrightnessSetting(cap)
 contrast_ui = basic_cam_setting.ContrastSetting(cap)
 saturation_ui = basic_cam_setting.SaturationSetting(cap)
 hue_ui = basic_cam_setting.HueSetting(cap)
-fw = FrameWriter(args.filename)
+fw = FrameWriter(args.filename, args.savepath)
 
 ui.add_ui(brightness_ui)
 ui.add_ui(contrast_ui)
@@ -89,7 +94,7 @@ else:
             ui_frame = np.zeros(frame.shape, np.uint8)
             ui.draw(ui_frame)
 
-        frame = fw.process(frame)
+        frame = fw.process(frame, ui.save_this_frame())
                 
         cv2.imshow('cosmos', cv2.bitwise_xor(frame, ui_frame))
 

@@ -4,6 +4,7 @@ import shutil
 import time
 import threading
 import Queue
+import datetime
 
 class FrameWriterThread(threading.Thread):
     def __init__(self, q, path, tmp_path):
@@ -21,9 +22,10 @@ class FrameWriterThread(threading.Thread):
 
 class FrameWriter(object):
 
-    def __init__(self, filename):
+    def __init__(self, filename, save_path):
         self.path = "/run/shm/%s.png" % filename
         self.tmp_path = "/run/shm/%s.tmp.png" % filename
+        self.save_path = save_path
         self.last = time.time();
         self.q = Queue.Queue()
         self.thread = FrameWriterThread(self.q, self.path, self.tmp_path)
@@ -41,10 +43,14 @@ class FrameWriter(object):
         self.run = val
     
 
-    def process(self, frame):
+    def process(self, frame, save_now):
         if self.run:
             now = time.time()
             if (int(self.last) < int(now)):
                 self.q.put(frame)
                 self.last = now
+
+        if (save_now):
+            fn = "cosmos_{:%Y_%m_%d_%H_%M_%S.png}".format(datetime.datetime.now())
+            cv2.imwrite(os.path.join(self.save_path, fn), frame)
         return frame

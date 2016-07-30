@@ -12,6 +12,7 @@ class UI(object):
         self.uis = []
         self.ui_idx = 0
         self.show_ui = False
+        self.save_frame = False
 
     def add_ui(self, ui):
         self.uis.append(ui)
@@ -49,9 +50,17 @@ class UI(object):
                 
         if (plain_key == ord(' ')):
             self.show_ui = not self.show_ui
+
+        if (plain_key == ord('s')):
+            self.save_frame = True    
             
         return key
 
+    def save_this_frame(self):
+        if (self.save_frame):
+            self.save_frame = False
+            return True
+    
     def get_current_ui(self):
         return self.uis[self.ui_idx]
 
