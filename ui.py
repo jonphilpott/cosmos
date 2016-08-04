@@ -13,6 +13,7 @@ class UI(object):
         self.ui_idx = 0
         self.show_ui = False
         self.save_frame = False
+        self.show_crosshair = False
 
     def add_ui(self, ui):
         self.uis.append(ui)
@@ -52,7 +53,10 @@ class UI(object):
             self.show_ui = not self.show_ui
 
         if (plain_key == ord('s')):
-            self.save_frame = True    
+            self.save_frame = True
+
+        if (plain_key == ord('c')):
+            self.show_crosshair = not self.show_crosshair
             
         return key
 
@@ -73,3 +77,9 @@ class UI(object):
                 cv2.line(frame, (30, 300), (30 + int(val * 500), 300), UI_COLOR, 20)
             elif cur.type == 'bool':
                 cv2.putText(frame, "ON" if val else "OFF", (10,300), self.font, 1, UI_COLOR,2)
+
+        if self.show_crosshair:
+            (h, w, c) = frame.shape
+            cv2.line(frame, (0, 0), (w, h), UI_COLOR, 1)
+            cv2.line(frame, (0, h), (w, 0), UI_COLOR, 1)
+            
