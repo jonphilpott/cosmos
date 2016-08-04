@@ -20,7 +20,7 @@ When the application is running you can:
 
 ## Command Line Options
 
-<code>
+```
 usage: cosmos [-h] [--headless] [--device DEVICE] [--divider DIVIDER]
               [--filename FILENAME] [--savepath SAVEPATH]
 
@@ -35,7 +35,7 @@ optional arguments:
                        to /run/shm/filename.png
   --savepath SAVEPATH  set path where snapshots will be written, default is
                        HOME/Pictures
-</code>
+```
 
 
 ## Requirements
@@ -45,7 +45,7 @@ optional arguments:
 
 Also included is a very basic Mathematica Module to import the image and to detect and hilight stars.
 
-<code>
+```
 Get["/path/to/cosmos/extras/mathematica/VideoAstronomy.m"]
 
 # grab a frame
@@ -54,7 +54,7 @@ MyFrame = CosmosImage[]
 # highlight detected stars
 HighlightStars[MyFrame]
 
-</code>
+```
 
 ## Nginx snippet
 
