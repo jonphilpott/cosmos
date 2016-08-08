@@ -36,5 +36,6 @@ class HueSetting(BasicCamSetting):
         super(self.__class__, self).__init__(cap, cv2.cv.CV_CAP_PROP_HUE)
         self.name = "HUE"
 
+        
 
 

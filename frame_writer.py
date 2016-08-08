@@ -22,7 +22,7 @@ class FrameWriterThread(threading.Thread):
 
 class FrameWriter(object):
 
-    def __init__(self, filename, save_path):
+    def __init__(self, filename, save_path, jpg):
         self.path = "/run/shm/%s.png" % filename
         self.tmp_path = "/run/shm/%s.tmp.png" % filename
         self.save_path = save_path
@@ -34,6 +34,7 @@ class FrameWriter(object):
         self.name = "SAVE IMAGES?"
         self.type = "bool"
         self.run = True
+        self.jpg = jpg
 
 
     def get(self):
@@ -51,6 +52,10 @@ class FrameWriter(object):
                 self.last = now
 
         if (save_now):
-            fn = "cosmos_{:%Y_%m_%d_%H_%M_%S.png}".format(datetime.datetime.now())
+            fn = "cosmos_{:%Y_%m_%d_%H_%M_%S}".format(datetime.datetime.now())
+            if (self.jpg):
+                fn += ".jpg"
+            else:
+                fn += ".png"
             cv2.imwrite(os.path.join(self.save_path, fn), frame)
         return frame

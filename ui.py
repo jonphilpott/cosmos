@@ -75,6 +75,7 @@ class UI(object):
             cv2.putText(frame, cur.name,(10,240), self.font, 1,UI_COLOR,2)
             if cur.type == 'real':
                 cv2.line(frame, (30, 300), (30 + int(val * 500), 300), UI_COLOR, 20)
+                cv2.putText(frame, "%d" % int(val * 100), (10,280), self.font, 1,UI_COLOR,2)
             elif cur.type == 'bool':
                 cv2.putText(frame, "ON" if val else "OFF", (10,300), self.font, 1, UI_COLOR,2)
 

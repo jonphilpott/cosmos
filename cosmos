@@ -3,6 +3,7 @@
 
 from video_capture import Capture
 from frame_writer import FrameWriter
+from time_lapse import TimeLapse
 from ui import UI
 import cv2
 import basic_cam_setting
@@ -37,6 +38,12 @@ parser.add_argument('--savepath',
                     help="set path where snapshots will be written, default is HOME/Pictures",
                     default=os.path.join(os.path.expanduser("~"), "Pictures")
 )
+parser.add_argument('--jpg',
+                    help="save snapshots and timelapse in jpg instead of png.",
+                    action='store_true'
+)
+
+
 
 
 args = parser.parse_args()
@@ -51,13 +58,16 @@ brightness_ui = basic_cam_setting.BrightnessSetting(cap)
 contrast_ui = basic_cam_setting.ContrastSetting(cap)
 saturation_ui = basic_cam_setting.SaturationSetting(cap)
 hue_ui = basic_cam_setting.HueSetting(cap)
-fw = FrameWriter(args.filename, args.savepath)
+timelapse_ui = TimeLapse()
+fw = FrameWriter(args.filename, args.savepath, args.jpg)
+
 
 ui.add_ui(brightness_ui)
 ui.add_ui(contrast_ui)
 ui.add_ui(saturation_ui)
 ui.add_ui(hue_ui)
 ui.add_ui(fw)
+ui.add_ui(timelapse_ui)
 
 ui_frame = None
 
@@ -94,7 +104,7 @@ else:
             ui_frame = np.zeros(frame.shape, np.uint8)
             ui.draw(ui_frame)
 
-        frame = fw.process(frame, ui.save_this_frame())
+        frame = fw.process(frame, ui.save_this_frame() or timelapse_ui.should_capture())
                 
         cv2.imshow('cosmos', cv2.bitwise_xor(frame, ui_frame))
 
