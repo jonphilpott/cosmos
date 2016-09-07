@@ -43,6 +43,17 @@ parser.add_argument('--jpg',
                     action='store_true'
 )
 
+parser.add_argument('--width',
+                    help="specify frame width from capture device",
+                    type=int,
+                    default=720
+)
+
+parser.add_argument('--height',
+                    help="specify frame height from capture device",
+                    type=int,
+                    default=576
+)
 
 
 
@@ -51,7 +62,7 @@ divider = args.divider
 frame_num = 0
 
 cap = Capture(args.device)
-cap.start()
+cap.start(args.width, args.height)
 ui = UI(cap)
 
 brightness_ui = basic_cam_setting.BrightnessSetting(cap)
